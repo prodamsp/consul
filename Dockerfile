@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install essential Linux packages
 RUN apt-get update -qq
-RUN apt-get install -y build-essential libpq-dev postgresql-client nodejs imagemagick sudo libxss1 libappindicator1 libindicator7 unzip memcached
+RUN apt-get install -y build-essential libpq-dev postgresql-client imagemagick sudo libxss1 libappindicator1 libindicator7 unzip memcached
 
 # Files created inside the container repect the ownership
 RUN adduser --shell /bin/bash --disabled-password --gecos "" consul \
@@ -49,6 +49,11 @@ RUN chmod +x chromedriver
 RUN mv -f chromedriver /usr/local/share/chromedriver
 RUN ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 RUN ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+
+# Install NODEJS
+RUN apt-get install -y curl software-properties-common
+RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+RUN apt-get install -y nodejs
 
 # Copy the Rails application into place
 COPY . .
